@@ -1000,7 +1000,7 @@ return type?vs:vs[0];}
 $.lm=function(first,second){var list=[];for(var i=0;i<first.length;i++)list.push(first[i]);if(!second)return list;for(var i=0;i<second.length;i++)list.push(second[i]);return list;}
 $.lsort=function(L,bigtosmall){L.sort(function(a,b){return bigtosmall?parseFloat(b)-parseFloat(a):parseFloat(a)-parseFloat(b)})}
 $.hlsort=function(hl,k,bigtosmall){var ks=$.hk(hl);var vs=$.hltl(hl,k);for(var i in vs)if($.isString(vs[i]))vs[i]=parseFloat(''+vs[i]);var v2k={};for(var i in vs){var k=ks[i];var v=''+vs[i];if(!v2k[v])v2k[v]=[];v2k[v].push(k);}
-$.lsort(vs,bigtosmall);$.log('vs',$.ltt(vs));var hl2=[];for(var i in vs){var v=vs[i];for(var ii in v2k[''+v]){var k=v2k[''+v][ii];hl2.push(hl[k]);}}
+$.lsort(vs,bigtosmall);var hl2=[];for(var i in vs){var v=vs[i];for(var ii in v2k[''+v]){var k=v2k[''+v][ii];hl2.push(hl[k]);}}
 return hl2;}
 $.textdim=function(text,css){var $dummy=$('body').ioover($.hm({position:'absolute',right:'-10px',top:'0px',width:'auto',height:'auto'},css)).append(text);var h={height:$dummy.height(),width:$dummy.width()};$dummy.remove();return h;}
 $.strim=function(text){var list=$.s2l(text,' ',null,true);if(!list.length)return'';return $.l2s(list,' ');}
@@ -3143,7 +3143,7 @@ var DATASET=[{"from":"\u798f\u5ca1\u770c\u798f\u5ca1\u5e02\u535a\u591a\u533a\u67
 
 
 
-var panes=null;var FONTSIZE=null;var FONTS={};var DEFS={};DEFS.order='random -- density.big2small -- density.small2big';DEFS.selector='headmost -- random';$.ioutils.nolog=false;$.ioutils.callbacktimeout='15s';var $UNDER,$OVER,$FACE;var B={};var MAP;var show=function(){var CS=$.ttl('#F44,#4AF,#FA4,#A4F,#FF2');var $B={};var C={};var one=function(k,c){var $box3=$FACE.ioover(true).css({position:'relative',float:'left',margin:'5px',width:'auto',height:'auto'}).ioground('#000',0.5).ioground(C[k],0.5).ioover(true);var genericshow=function(k){$B[k].ioanimoutemptyin('fast',function(){var $box=$B[k];var POS=$.domGetPagePos($box.parent());$box.css({'left':Math.round(-POS.left+20)+'px',width:Math.round($('body').width()-40)+'px',color:'#fff','font-size':Math.round()+'px'})
+var panes=null;var FONTSIZE=null;var FONTS={};var DEFS={};DEFS.order='random -- density.big2small -- density.small2big';DEFS.selector='headmost -- random -- biggest -- smallest';$.ioutils.nolog=false;$.ioutils.callbacktimeout='15s';var $UNDER,$OVER,$FACE;var B={};var MAP;var KVS;var show=function(){var CS=$.ttl('#F44,#4AF,#FA4,#A4F,#FF2');var $B={};var C={};var one=function(k,c){var $box3=$FACE.ioover(true).css({position:'relative',float:'left',margin:'5px',width:'auto',height:'auto'}).ioground('#000',0.5).ioground(C[k],0.5).ioover(true);var genericshow=function(k){$B[k].ioanimoutemptyin('fast',function(){var $box=$B[k];var POS=$.domGetPagePos($box.parent());$box.css({'left':Math.round(-POS.left+20)+'px',width:Math.round($('body').width()-40)+'px',color:'#fff','font-size':Math.round()+'px'})
 $box.ioground('#000',0.8);$box.ioground(C[k],0.5);$box.ioover(true).css({height:'3px'})
 var $box2=$box.ioover(true).css({margin:'0px 1%',width:'98%'})
 $box.ioover(true).css({height:'3px'})
@@ -3153,9 +3153,10 @@ $A=$box3.ioover({position:'absolute',top:'110%',left:'0px',width:'300px',height:
 for(var k in B){C[k]=CS.shift();CS.push(C[k]);}
 $FACE.ioloop($.hk(B),'1ms',function(dom,value,sleep,c){if(!value.length)return c();one(value.shift(),function(){c(value)})})}
 var main=function(){$('body').ioanimoutemptyin('fast',function(){$('body').css({margin:'0px',width:'100%',height:'100%',overflow:'hidden'});$UNDER=$('body').ioover();$OVER=$('body').iounder();$FACE=$('body').ioover().css({top:'5px',left:'1%',width:'98%',height:'auto'});$UNDER.googlemapsapi(function(map){MAP=map;})
+$FACE.kvstorage(function(kvs){KVS=kvs;})
 show();})}
 var sizes=function(){var $box=$('body').ioover().css({width:'auto',height:'auto'})
-$box.append('THIS IS TEST');for(var k in $.io.font){FONTSIZE=$.io.font[k];$box.css({'font-size':$.io.font[k]});var w1=$box.width();var w2=$box.parent().width();$.log('looking for FONTSIZE',w1,w2);if($box.width()<0.2*$box.parent().width())break;}
+$box.append('THIS IS TEST');for(var k in $.io.font){FONTSIZE=$.io.font[k];$box.css({'font-size':$.io.font[k]});var w1=$box.width();var w2=$box.parent().width();if($box.width()<0.2*$box.parent().width())break;}
 FONTS={big:FONTSIZE}
 var f2p=$.hvak($.hv($.io.font));var p2f=$.hk($.io.font);var pos=parseInt(f2p[FONTSIZE]);var pos2=pos<parseInt($.hv(f2p).pop())-1?pos+2:pos;FONTS.normal=$.io.font[p2f[pos2]];var pos3=pos<parseInt($.hv(f2p).pop())-3?pos+4:pos;FONTS.small=$.io.font[p2f[pos3]];main();}
 $(document).ready(function(){sizes();})
@@ -3166,9 +3167,12 @@ $(document).ready(function(){sizes();})
 $.ordermaker=function(HL,order,inverse){var HL2=[];var ks,k;if(order!='random'){k=$.ttl(order,'.').shift();order=$.ttl(order,'.').pop();}
 if(order=='random'){ks=$.hk(HL);ks=$.mathShuffle(ks);for(var i in ks)HL2.push(HL[ks[i]]);return HL2;}
 HL2=$.hlsort(HL,'density',order=='big2small'?(inverse?false:true):(inverse?true:false));return HL2;}
-$.itemselector=function(HL,order,count,c){var HL2=[];var ks;ks=$.hk(HL);if(order=='random')ks=$.mathShuffle(ks);for(var i in ks)if(HL2.length<count)HL2.push(HL[ks[i]]);return HL2;}
-$.fn.feedbackbuttonsStages=function(menu,c,pileup){var $me=$(this).first();$me.ioanimoutemptyin('fast',function(){var h={};var one=function(k,c){var $box=pileup?$me.ioover(true):$me;$box.ioanimoutemptyin('fast',function(){$box.append(k+': ');var vs=$.ttl(menu[k],'--');var L=[];for(var i in vs)L.push('<strong>'+$.trim(vs[i])+'</strong>');$box.append($.ltt(L,' '))
-$box.css({'font-size':FONTS.normal,color:'#bbb'}).find('strong').iotextbutton(function(v){c(k,v);},'#fff');})}
+$.itemselector=function(HL,order,count,key,inverse){$.log('order',order);if(order=='biggest')order=key+'.big2small';if(order=='smallest')order=key+'.small2big';var HL2=HL;if(order!='headmost')HL2=$.ordermaker(HL,order,inverse);var HL3=[];for(var i=0;i<count&&i<HL2.length;i++)HL3.push(HL2[i]);return HL3;}
+$.fn.feedbackbuttonsStages=function(menu,c,pileup){var $me=$(this).first();$me.ioanimoutemptyin('fast',function(){var h={};var one=function(k,c){var $box=pileup?$me.ioover(true):$me;$box.ioanimoutemptyin('fast',function(){$box.append(k+': ');var vs=$.ttl(menu[k],'--');var L=[];for(var i in vs){var v=$.trim(vs[i]);if(v.substr(0,1)!='?'){L.push('<strong>'+$.trim(vs[i])+'</strong>');continue;}
+v=v.substr(1);if(!v.length)v='25';L.push($('<input></input>').attr('value','?').css({width:v+'px',height:'1.1em',border:'0px','background-color':'#888',color:'#fff','font-size':FONTS.small}).get(0).outerHTML);}
+$.log(L);$box.append($.ltt(L,' '))
+$box.css({'font-size':FONTS.normal,color:'#bbb'}).find('strong').iotextbutton(function(v){c(k,v);},'#fff');var input=function($box){$box.ioafter({},'span').append('go').ioatomsPlainButton({donotwrap:true,donotdraw:true,off:1.0,hover:0.8,on:0.6}).onclick(function(){var v=$.trim($box.val());if(v=='?'||!v.length)return;c(k,v);})}
+$box.find('input').each(function(){input($(this));})})}
 $me.ioloop($.hk(menu),'1ms',function(dom,value,sleep,c2){if(!value.length){c2();return c(h);};one(value.shift(),function(k,v){h[k]=v;c2(value);});})})}
 $.fn.itemSelector=function(HL,showkey,c,msg,donec){var $me=$(this).first();$me.ioanimoutemptyin('fast',function(){if(msg)$me.append(msg).css({'font-size':FONTS.small,color:'#ccc'});var one=function(i,v){var $box=$me.append(' ').ioover({position:'relative','font-size':FONTS.small},'strong').append(v);$box.iotextbutton(function(){c(v,i);},'#fff')}
 $me.ioloop($.hk(HL),'1ms',function(dom,value,sleep,c2){if(!value.length){if(donec)donec();return c2();};var i=value.shift();one(i,showkey?HL[i][showkey]:i);c2(value);})})}
@@ -3176,10 +3180,10 @@ $me.ioloop($.hk(HL),'1ms',function(dom,value,sleep,c2){if(!value.length){if(done
 
 
 
-B.map=function($box){$box.feedbackbuttonsStages({order:DEFS.order,'number of locations':'10 -- 25 -- 50 -- 100','pick center':DEFS.selector},function(h){var HL=$.ordermaker(DATASET,h.order,true);HL=$.itemselector(HL,'headmost',parseInt(h['number of locations']))
-var CENTER=$.itemselector(HL,h['pick center'],1).shift();$box.empty();var map=function(h){$.log('showing',h.from);MAP.location(h.from);}
-$box.ioover(true).itemSelector([CENTER],'density',function(v,pos){map(CENTER);},'your center: ');$box.ioover(true).itemSelector(HL,'density',function(v,pos){map(HL[pos]);},'other locations: ');})}
-B.service=function($box){}
+B.map=function($box){$box.feedbackbuttonsStages({order:DEFS.order,'number of locations':'10 -- 25 -- 50 -- 100','pick center':DEFS.selector},function(h){$.log('input',h);var HL=$.ordermaker(DATASET,h.order,true);HL=$.itemselector(HL,'headmost',parseInt(h['number of locations']));var CENTER=$.itemselector(HL,h['pick center'],1,'density',true).shift();$box.empty();var map=function(h){$.log('showing',h.from);MAP.location(h.from);}
+$box.ioover(true).itemSelector([CENTER],'density',function(v,pos){map(CENTER);},'your center: ');$box.ioover(true).itemSelector(HL,'density',function(v,pos){map(HL[pos]);},'other locations: ');KVS.get('evcitySetup',function(h){var setup={};if(h&&h.evcitySetup)setup=h.evcitySetup;setup.map={center:CENTER,places:HL};KVS.set({evcitySetup:setup});})})}
+B.service=function($box){$box.feedbackbuttonsStages({'EV battery capacity (kWh)':'?50','Service Usage Monthly Quota (times)':'?50'},function(h){var vs=$.hv(h);KVS.get('evcitySetup',function(h){var setup={};if(h&&h.evcitySetup)setup=h.evcitySetup;setup.service={capacity:parseInt(vs[0]),quota:parseInt(vs[1])};KVS.set({evcitySetup:setup});})
+$box.ioanimoutemptyin('fast',function(){$box.append('OK');});})}
 B.distributions=function($box){}
 B.simulation=function($box){}
 B['export']=function($box){}

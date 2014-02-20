@@ -2,11 +2,12 @@ var panes = null;
 var FONTSIZE = null; var FONTS = {};	 // big, normal, small
 var DEFS = {};
 DEFS.order = 'random -- density.big2small -- density.small2big';
-DEFS.selector = 'headmost -- random';
+DEFS.selector = 'headmost -- random -- biggest -- smallest';
 $.ioutils.nolog = false;
 $.ioutils.callbacktimeout = '15s';
 var $UNDER, $OVER, $FACE; var B = {};
 var MAP;	// maps interface   location(), route()
+var KVS; // key-value store
 var show = function() {
 	var CS = $.ttl( '#F44,#4AF,#FA4,#A4F,#FF2'); var $B = {}; var C = {};
 	var one = function( k, c) { 
@@ -40,6 +41,7 @@ var main = function() { $( 'body').ioanimoutemptyin( 'fast', function() {
 	$OVER = $( 'body').iounder();
 	$FACE = $( 'body').ioover().css({ top: '5px', left: '1%', width: '98%', height: 'auto'});
 	$UNDER.googlemapsapi( function( map) { MAP = map; })
+	$FACE.kvstorage( function( kvs) { KVS = kvs; })
 	show();
 })}
 var sizes = function() { 
@@ -50,7 +52,7 @@ var sizes = function() {
 		$box.css({ 'font-size': $.io.font[ k]});
 		var w1 = $box.width();
 		var w2 = $box.parent().width();
-		$.log( 'looking for FONTSIZE', w1, w2);
+		//$.log( 'looking for FONTSIZE', w1, w2);
 		if ( $box.width() < 0.2 * $box.parent().width()) break;
 	}
 	FONTS = { big: FONTSIZE}
